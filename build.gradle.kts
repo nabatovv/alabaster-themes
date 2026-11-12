@@ -1,5 +1,6 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -7,25 +8,31 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("java")
 
-    kotlin("jvm") version "2.1.20"
+    kotlin("jvm") version "2.4.21"
 
-    id("dev.clojurephant.clojure") version "0.8.0-beta.7"
+    id("dev.clojurephant.clojure") version "0.9.1"
 
-    id("org.jetbrains.intellij.platform") version "2.5.0"
+    id("org.jetbrains.intellij.platform") version "2.20.1"
 
-    id("org.jetbrains.changelog") version "2.2.1"
+    id("org.jetbrains.changelog") version "2.5.0"
 
-    id("org.jetbrains.qodana") version "2024.3.4"
+    id("org.jetbrains.qodana") version "2026.2.2"
 
-    id("org.jetbrains.kotlinx.kover") version "0.9.1"
+    id("org.jetbrains.kotlinx.kover") version "0.9.11"
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(25)
+}
 
-    compilerOptions {
-        freeCompilerArgs.add("-Xwhen-guards")
+java {
+    toolchain {
+        // IntelliJ 2026.3 platform classes are Java 25 bytecode, so the compilers must run on JDK 25
+        languageVersion = JavaLanguageVersion.of(25)
     }
+    // Keep the produced bytecode compatible with older IDE runtimes (JBR 21 in 2024.3+)
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -45,18 +52,17 @@ repositories {
 
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    implementation("org.clojure:clojure:1.12.0")
-    implementation("http-kit:http-kit:2.5.3")
+    implementation("org.clojure:clojure:1.12.6")
+    implementation("http-kit:http-kit:2.8.1")
 
     intellijPlatform {
-        intellijIdeaUltimate("2024.3.5")
-        bundledPlugins("org.jetbrains.kotlin", "com.intellij.java", "JavaScript")
+        intellijIdeaUltimate("2026.3")
+        bundledPlugins("org.jetbrains.kotlin", "com.intellij.java", "JavaScript", "com.intellij.modules.jcef")
         plugins(
-            "com.cursiveclojure.cursive:1.14.0-2024.3",
-            "org.intellij.scala:2024.3.42",
-            "org.jetbrains.plugins.go:243.26053.27",
-            "PsiViewer:243.7768"
+            "com.cursiveclojure.cursive:2026.4.1-263",
+            "org.intellij.scala:2026.3.26",
+            "org.jetbrains.plugins.go:263.7307.200",
+            "PsiViewer:2026.2"
         )
         pluginVerifier()
         zipSigner()
@@ -116,7 +122,10 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            recommended()
+            // Oldest supported IDE (243) and the latest IntelliJ IDEA (263) — since 2025.3 the Community Edition
+            // is published as the unified "IntelliJ IDEA" distribution (idea:idea), no longer as ideaIC.
+            create(IntelliJPlatformType.IntellijIdeaCommunity, "2024.3.7")
+            create(IntelliJPlatformType.IntellijIdeaUltimate, "2026.3")
         }
     }
 }
@@ -149,7 +158,7 @@ tasks.withType(KotlinCompile::class).all {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
         // For creation of default methods in interfaces
-        freeCompilerArgs.add("-Xjvm-default=all")
+        freeCompilerArgs.add("-jvm-default=enable")
     }
 }
 

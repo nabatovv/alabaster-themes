@@ -1,7 +1,7 @@
 package com.vlnabatov.alabaster.extensions.annotation
 
+import clojure.lang.IPersistentMap
 import clojure.lang.Keyword
-import clojure.lang.PersistentHashMap
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity.TEXT_ATTRIBUTES
@@ -24,39 +24,39 @@ import cursive.lexer.ClojureTokenTypes.SHARP
 import cursive.lexer.ClojureTokenTypes.UNQUOTE
 import cursive.lexer.ClojureTokenTypes.UNQUOTE_SPLICING
 import cursive.psi.ClojurePsiElement
-import cursive.psi.ClojurePsiElement.KEYWORD
-import cursive.psi.ClojurePsiElement.LIST
-import cursive.psi.ClojurePsiElement.SYMBOL
-import cursive.psi.ClojurePsiElement.VECTOR
 import cursive.psi.api.ClListLike
 import cursive.psi.impl.synthetic.SyntheticSymbol
 import java.awt.Font
 
 
 val macro = Keyword.find("macro")
-val ns = Keyword.find("ns")
+
+// Cursive 2026.4 replaced IElementType constants with interned clojure.lang.Keyword values on ClojurePsiElement
+private val KEYWORD_TYPE = ClojurePsiElement.KEYWORD
+private val LIST_TYPE = ClojurePsiElement.LIST
+private val SYMBOL_TYPE = ClojurePsiElement.SYMBOL
+private val VECTOR_TYPE = ClojurePsiElement.VECTOR
 
 val functionMacrosRegex = Regex("\\bfn|defn|defn-|defmulti|defmethod|defmacro|deftest\\b")
 
 
 fun isClojureLangNSCall(e: ClojurePsiElement) =
-  (((e.reference?.resolve() as SyntheticSymbol)
-    .deref() as PersistentHashMap)[ns] as String).matches(Regex("clojure\\..*"))
+  ((e.reference?.resolve() as? SyntheticSymbol)?.ns?.name ?: "").matches(Regex("clojure\\..*"))
 
 
 fun isMacroCall(e: ClojurePsiElement) =
-  ((e.reference?.resolve() as SyntheticSymbol).deref() as PersistentHashMap)[macro] != null
+  ((e.reference?.resolve() as? SyntheticSymbol)?.deref() as? IPersistentMap)?.valAt(macro) != null
 
 
 fun isFunctionExpression(e: ClojurePsiElement) =
-  (e.type == ClojurePsiElement.SHARP && (e.children[0] as ClListLike).type == LIST) ||
+  (e.type == ClojurePsiElement.SHARP && (e.children[0] as ClListLike).type == LIST_TYPE) ||
       e.children[0].text.matches(functionMacrosRegex)
 
 
 fun isBasicFunctionDeclaration(e: ClojurePsiElement) =
   (((e.parent as ClListLike).children[0].text.matches(functionMacrosRegex)) &&
-      (e.parent as ClListLike).type == LIST &&
-      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL && it !== e.parent.children[0] } === e)
+      (e.parent as ClListLike).type == LIST_TYPE &&
+      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL_TYPE && it !== e.parent.children[0] } === e)
 
 
 fun isFunctionDeclaration(e: ClojurePsiElement) =
@@ -72,38 +72,38 @@ fun isFunctionDeclaration(e: ClojurePsiElement) =
 fun isPolymorphicFunctionDeclaration(e: ClojurePsiElement) =
   (e.parent.parent.children[0].text
     .matches(Regex("\\bdefinterface|defprotocol|deftype|extend-type|extend-protocol|reify\\b")) &&
-      (e.parent as ClListLike).type == LIST &&
-      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL } === e)
+      (e.parent as ClListLike).type == LIST_TYPE &&
+      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL_TYPE } === e)
 
 
 fun isCompiledPolymorphicFunctionDeclaration(e: ClojurePsiElement) =
   (e.parent.parent.parent.children[0].text.matches(Regex("\\bgen-class|gen-interface\\b")) &&
       (e.parent.parent.parent.children[
         e.parent.parent.parent.children.indexOfFirst {
-          ((it as ClojurePsiElement).type == KEYWORD) &&
+          ((it as ClojurePsiElement).type == KEYWORD_TYPE) &&
               it.text.matches(Regex("\\B:methods\\b"))
         } + 1] === e.parent.parent) &&
-      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL } === e)
+      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL_TYPE } === e)
 
 
 fun isVariableDeclarationWithFunctionAssignment(e: ClojurePsiElement) =
   (e.parent.children[0].text.matches(Regex("\\bdef\\b")) &&
       (isFunctionExpression(e.parent.children.last() as ClojurePsiElement)) &&
-      e.parent.children.firstOrNull { it !== e.parent.children[0] && (it as ClojurePsiElement).type == SYMBOL } === e)
+      e.parent.children.firstOrNull { it !== e.parent.children[0] && (it as ClojurePsiElement).type == SYMBOL_TYPE } === e)
 
 
 fun isLetMacroBindingToAFunction(e: ClojurePsiElement) =
-  ((e.parent as ClListLike).type == VECTOR &&
-      e.type == SYMBOL &&
+  ((e.parent as ClListLike).type == VECTOR_TYPE &&
+      e.type == SYMBOL_TYPE &&
       e.parent.parent.children[0].text.matches(Regex("\\blet|if-let|when-let\\b")) &&
       isFunctionExpression(e.parent.children[e.parent.children.indexOf(e) + 1] as ClojurePsiElement))
 
 
 fun isLetFnMacroBindingToAFunction(e: ClojurePsiElement) =
   (e.parent.parent.parent.children[0].text.matches(Regex("\\bletfn\\b")) &&
-      (e.parent.parent as ClListLike).type == VECTOR &&
-      (e.parent as ClListLike).type == LIST &&
-      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL } === e)
+      (e.parent.parent as ClListLike).type == VECTOR_TYPE &&
+      (e.parent as ClListLike).type == LIST_TYPE &&
+      e.parent.children.firstOrNull { (it as ClojurePsiElement).type == SYMBOL_TYPE } === e)
 
 
 class ClojureAnnotator : Annotator {
@@ -167,7 +167,7 @@ class ClojureAnnotator : Annotator {
 
         SYMBOL_TOKEN -> {
           when {
-            (element.parent.parent as ClojurePsiElement).type === ClojurePsiElement.NAMESPACED_MAP ->
+            (element.parent.parent as ClojurePsiElement).type == ClojurePsiElement.NAMESPACED_MAP ->
               holder.newSilentAnnotation(TEXT_ATTRIBUTES).textAttributes(NUMBER).create()
 
             isFunctionDeclaration(element.parent as ClojurePsiElement) ->

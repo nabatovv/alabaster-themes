@@ -4,116 +4,165 @@
 
 ## [Unreleased]
 
+## [1.0.95]
+
+- Fixed plugin loading failure on modern JDKs (`VerifyError` in `isDumbAware()` of the Clojure-generated classes)
+- Compatibility with the latest JetBrains IDE releases (up to 2026.3)
+- Updated all dependencies to their latest versions
+
 ## [1.0.93]
+
 - Vibe coding fixes by Deepseek
 
 ## [1.0.92]
+
 - Go support
 
 ## [1.0.91]
+
 - Update theme to Light with Light Header and Dark UIs defaults.
 
 ## [1.0.90]
+
 - Fixed broken Clojure support after Cursive's upgrade.
 
 ## [1.0.83]
+
 - Strings' content background color in BG heme stays the same when the line is highlighted by IDE, previously background changed to line highlight color.
 - String's quotation marks' background color in dynamic now and changes to a line highlight color, previously it was always of a default background color.
 - String quotations marks rendering speed improvement. 
 - Better Scala support: strings, constants.
 
 ## [1.0.82]
+
 - Updated changelog for previous versions.
 
 ## [1.0.81]
+
 - Svelte support, BG delimiter background fix, etc.
 
 ## [1.0.73]
+
 - Better Javascript highlighting by virtue of [Nik Lopin](https://github.com/nlopin).
 
 ## [1.0.60]
+
 - Fix Java's metadata in the dark theme
 
 ## [1.0.59]
+
 - Improvements to console in the dark theme
 
 ## [1.0.58]
+
 - The dark theme is darker
 
 ## [1.0.57]
+
 - White color text for the dark theme
 
 ## [1.0.56]
+
 - Even better comment's color in dark theme
 
 ## [1.0.55]
+
 - Better comment's color in dark theme
 - [1.0.54]
 - Default theme fix
 
 ## [1.0.53]
+
 - BG theme improvements
 
 ## [1.0.52]
+
 - Many small improvements
 
 ## [1.0.51]
+
 - Fancier Clojure highlighting
 
 ## [1.0.50]
+
 - Fancy strings, XML (HTML, etc.) improvements, Kotlin constants
 
 ## [1.0.42]
+
 - Warning highlighting improvements, etc.
 
 ## [1.0.41]
+
 - Better highlighting for XML, JSON, etc.
 
 ## [1.0.40]
+
 - Cleanup
 
 ## [1.0.39]
+
 - Proper theme names
 
 ## [1.0.38]
+
 - Support the new versions of IDEA
 
 ## [1.0.37]
+
 - Better highlighting for the light themes
 
 ## [1.0.36]
+
 - More fixes
 
 ## [1.0.35]
+
 - Fixed second light theme
 
 ## [1.0.34]
+
 - Better highlighting for Clojure light themes
 
 ## [1.0.33]
+
 - Cleanup
 
 ## [1.0.32]
+
 - Added second light theme
 - Non Clojure STD macro calls are in italic font style
 
 ## [1.0.31]
+
 - Updated to 2023-IU
 
 ## [1.0.30]
+
 - Cleanup
 
 ## [1.0.29]
+
 - Light and dark themes bundled in one plugin
 
 ## [1.0.25]
+
 - Python improved
 
-[Unreleased]: https://github.com/nabato/alabaster-themes/compare/v1.0.73...HEAD
+[Unreleased]: https://github.com/nabato/alabaster-themes/compare/v1.0.95...HEAD
+[1.0.95]: https://github.com/nabato/alabaster-themes/compare/v1.0.93...v1.0.95
+[1.0.94]: https://github.com/nabato/alabaster-themes/compare/v1.0.93...v1.0.94
+[1.0.93]: https://github.com/nabato/alabaster-themes/compare/v1.0.92...v1.0.93
+[1.0.92]: https://github.com/nabato/alabaster-themes/compare/v1.0.91...v1.0.92
+[1.0.91]: https://github.com/nabato/alabaster-themes/compare/v1.0.90...v1.0.91
+[1.0.90]: https://github.com/nabato/alabaster-themes/compare/v1.0.83...v1.0.90
+[1.0.83]: https://github.com/nabato/alabaster-themes/compare/v1.0.82...v1.0.83
+[1.0.82]: https://github.com/nabato/alabaster-themes/compare/v1.0.81...v1.0.82
+[1.0.81]: https://github.com/nabato/alabaster-themes/compare/v1.0.73...v1.0.81
 [1.0.73]: https://github.com/nabato/alabaster-themes/compare/v1.0.60...v1.0.73
 [1.0.60]: https://github.com/nabato/alabaster-themes/compare/v1.0.59...v1.0.60
 [1.0.59]: https://github.com/nabato/alabaster-themes/compare/v1.0.58...v1.0.59
-[1.0.58]: https://github.com/nabato/alabaster-themes/compare/v1.0.56...v1.0.58
+[1.0.58]: https://github.com/nabato/alabaster-themes/compare/v1.0.57...v1.0.58
+[1.0.57]: https://github.com/nabato/alabaster-themes/compare/v1.0.56...v1.0.57
 [1.0.56]: https://github.com/nabato/alabaster-themes/compare/v1.0.55...v1.0.56
 [1.0.55]: https://github.com/nabato/alabaster-themes/compare/v1.0.53...v1.0.55
 [1.0.53]: https://github.com/nabato/alabaster-themes/compare/v1.0.52...v1.0.53

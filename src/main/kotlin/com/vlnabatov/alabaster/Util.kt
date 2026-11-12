@@ -9,13 +9,10 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors.STRING
 import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.refactoring.suggested.endOffset
-import com.intellij.refactoring.suggested.startOffset
-import com.intellij.ui.Gray
 import java.awt.Color
 import java.awt.Font
 
-val transparentColor: Color = Gray.TRANSPARENT
+val transparentColor: Color = Color(0, 0, 0, 0)
 
 const val theme = "Alabaster"
 const val BGTheme = "$theme BG"
@@ -36,13 +33,13 @@ fun annotateSeparationMarks(element: PsiElement, holder: AnnotationHolder, textA
     // Standard annotations for non-Alabaster editor themes
     holder
         .newSilentAnnotation(HighlightSeverity.INFORMATION)
-        .range(TextRange(element.startOffset, element.startOffset + numberOfOpeningQuotationMarks))
+        .range(TextRange(element.textRange.startOffset, element.textRange.startOffset + numberOfOpeningQuotationMarks))
         .textAttributes(textAttributesKey)
         .create()
 
     holder
         .newSilentAnnotation(HighlightSeverity.INFORMATION)
-        .range(TextRange(element.endOffset - numberOfClosingQuotationMarks, element.endOffset))
+        .range(TextRange(element.textRange.endOffset - numberOfClosingQuotationMarks, element.textRange.endOffset))
         .textAttributes(textAttributesKey)
         .create()
 
@@ -53,13 +50,13 @@ fun annotateSeparationMarks(element: PsiElement, holder: AnnotationHolder, textA
         // Differently colored quotation marks for Alabaster themes
         holder
             .newSilentAnnotation(HighlightSeverity.INFORMATION)
-            .range(TextRange(element.startOffset, element.startOffset + numberOfOpeningQuotationMarks))
+            .range(TextRange(element.textRange.startOffset, element.textRange.startOffset + numberOfOpeningQuotationMarks))
             .enforcedTextAttributes(TextAttributes(foreground, background, null, null, Font.PLAIN))
             .create()
 
         holder
             .newSilentAnnotation(HighlightSeverity.INFORMATION)
-            .range(TextRange(element.endOffset - numberOfClosingQuotationMarks, element.endOffset))
+            .range(TextRange(element.textRange.endOffset - numberOfClosingQuotationMarks, element.textRange.endOffset))
             .enforcedTextAttributes(TextAttributes(foreground, background, null, null, Font.PLAIN))
             .create()
 
@@ -67,7 +64,7 @@ fun annotateSeparationMarks(element: PsiElement, holder: AnnotationHolder, textA
         if (isBGTheme()) {
             holder
                 .newSilentAnnotation(HighlightSeverity.TEXT_ATTRIBUTES)
-                .range(TextRange(element.startOffset + numberOfOpeningQuotationMarks, element.endOffset - numberOfClosingQuotationMarks))
+                .range(TextRange(element.textRange.startOffset + numberOfOpeningQuotationMarks, element.textRange.endOffset - numberOfClosingQuotationMarks))
                 .enforcedTextAttributes(TextAttributes(foreground, EditorColorsManager.getInstance().schemeForCurrentUITheme.getAttributes(STRING).backgroundColor, null, null, Font.PLAIN))
                 .create()
         }

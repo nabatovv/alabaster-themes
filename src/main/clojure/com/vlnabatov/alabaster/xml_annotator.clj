@@ -5,7 +5,8 @@
            (com.intellij.openapi.editor DefaultLanguageHighlighterColors)
            (com.intellij.psi.xml XmlTokenType)
            (com.intellij.psi PsiElement))
-  (:gen-class :implements [com.intellij.lang.annotation.Annotator]
+  (:gen-class :implements [com.intellij.lang.annotation.Annotator
+                           com.intellij.openapi.project.PossiblyDumbAware]
               :name       com.vlnabatov.alabaster.extensions.annotation.XMLAnnotator
               :prefix     "-"))
 

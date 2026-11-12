@@ -12,7 +12,8 @@
            (com.intellij.psi PsiElement)
            (com.intellij.psi.tree IElementType)
            (com.vlnabatov.alabaster UtilKt))
-  (:gen-class :implements [com.intellij.lang.annotation.Annotator]
+  (:gen-class :implements [com.intellij.lang.annotation.Annotator
+                           com.intellij.openapi.project.PossiblyDumbAware]
               :name       com.vlnabatov.alabaster.extensions.annotation.GoAnnotator
               :prefix     "-"))
 

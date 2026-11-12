@@ -3,18 +3,33 @@ package com.vlnabatov.alabaster.extensions.annotation
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity.INFORMATION
-import com.intellij.lang.ecmascript6.ES6StubElementTypes.*
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.ASSIGNMENT_EXPRESSION
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.DEFINITION_EXPRESSION
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.DESTRUCTURING_ELEMENT
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.DESTRUCTURING_PROPERTY
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.DESTRUCTURING_SHORTHANDED_PROPERTY
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.NEW_EXPRESSION
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.PROPERTY
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.STRING_TEMPLATE_EXPRESSION
-import com.intellij.lang.javascript.BasicJavaScriptStubElementTypes.VAR_STATEMENT
-import com.intellij.lang.javascript.JSElementTypes.*
-import com.intellij.lang.javascript.JSTokenTypes.*
+import com.intellij.lang.javascript.JSElementTypes.ASSIGNMENT_EXPRESSION
+import com.intellij.lang.javascript.JSElementTypes.CLASS
+import com.intellij.lang.javascript.JSElementTypes.CLASS_EXPRESSIONS
+import com.intellij.lang.javascript.JSElementTypes.DEFINITION_EXPRESSION
+import com.intellij.lang.javascript.JSElementTypes.DESTRUCTURING_ELEMENT
+import com.intellij.lang.javascript.JSElementTypes.DESTRUCTURING_PROPERTY
+import com.intellij.lang.javascript.JSElementTypes.DESTRUCTURING_SHORTHANDED_PROPERTY
+import com.intellij.lang.javascript.JSElementTypes.FIELD
+import com.intellij.lang.javascript.JSElementTypes.FIELD_STATEMENT
+import com.intellij.lang.javascript.JSElementTypes.FUNCTION_DECLARATIONS
+import com.intellij.lang.javascript.JSElementTypes.FUNCTION_EXPRESSIONS
+import com.intellij.lang.javascript.JSElementTypes.FUNCTION_PROPERTIES
+import com.intellij.lang.javascript.JSElementTypes.NEW_EXPRESSION
+import com.intellij.lang.javascript.JSElementTypes.PROPERTY
+import com.intellij.lang.javascript.JSElementTypes.REFERENCE_EXPRESSION
+import com.intellij.lang.javascript.JSElementTypes.STRING_TEMPLATE_EXPRESSION
+import com.intellij.lang.javascript.JSElementTypes.VAR_STATEMENT
+import com.intellij.lang.javascript.JSElementTypes.VARIABLE
+import com.intellij.lang.javascript.JSTokenTypes.BACKQUOTE
+import com.intellij.lang.javascript.JSTokenTypes.FALSE_KEYWORD
+import com.intellij.lang.javascript.JSTokenTypes.IDENTIFIER
+import com.intellij.lang.javascript.JSTokenTypes.NULL_KEYWORD
+import com.intellij.lang.javascript.JSTokenTypes.PRIVATE_IDENTIFIER
+import com.intellij.lang.javascript.JSTokenTypes.SINGLE_QUOTE_STRING_LITERAL
+import com.intellij.lang.javascript.JSTokenTypes.STRING_LITERAL
+import com.intellij.lang.javascript.JSTokenTypes.TRUE_KEYWORD
+import com.intellij.lang.javascript.JSTokenTypes.UNDEFINED_KEYWORD
 import com.intellij.lang.javascript.psi.impl.JSReferenceExpressionImpl
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors.FUNCTION_DECLARATION
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors.NUMBER
@@ -39,11 +54,10 @@ val mathObjectRegex = Regex("\\bMath|Number\\b")
 val assignmentExpressionTypes =
   setOf(
     ASSIGNMENT_EXPRESSION,
-    *BODY_VARIABLES.types,
-    *ES6_CLASS_FIELDS.types,
-    PROPERTY,
+    VARIABLE,
     FIELD,
     FIELD_STATEMENT,
+    PROPERTY,
     VAR_STATEMENT
   )
 

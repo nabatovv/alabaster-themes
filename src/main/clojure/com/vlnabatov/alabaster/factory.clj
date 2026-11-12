@@ -21,7 +21,8 @@
               [com.intellij.ide.ui.UISettingsListener
                  com.intellij.openapi.editor.colors.EditorColorsListener
                  com.intellij.openapi.wm.ToolWindowFactory
-                 com.intellij.openapi.project.DumbAware]
+                 com.intellij.openapi.project.DumbAware
+                 com.intellij.openapi.project.PossiblyDumbAware]
               :name com.vlnabatov.alabaster.Factory))
 
 (deftype PortalLogger [])
@@ -40,7 +41,7 @@
 
 (defn- get-options
   []
-  (pr-str (pr-str) {:theme ::theme} :themes {::theme (theme/get-theme)}))
+  (pr-str {:theme ::theme :themes {::theme (theme/get-theme)}}))
 
 (defn- patch-options
   ([]
@@ -87,9 +88,8 @@
                                              {:port 0,
                                               :legacy-return-value? false})))))
   (write-config project
-                {:host "localhost"}
-                :port
-                (http/server-port (get-in @instances [project :server]))))
+                {:host "localhost"
+                 :port (http/server-port (get-in @instances [project :server]))}))
 
 (defn as-function
   ^Function [f]

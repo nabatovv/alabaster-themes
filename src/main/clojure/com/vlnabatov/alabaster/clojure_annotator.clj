@@ -9,18 +9,19 @@
            (org.jetbrains.plugins.scala.lang.lexer ScalaTokenTypes)
            (clojure.lang Keyword)
            (com.intellij.psi PsiElement))
-  (:gen-class :implements [com.intellij.lang.annotation.Annotator]
+  (:gen-class :implements [com.intellij.lang.annotation.Annotator
+                           com.intellij.openapi.project.PossiblyDumbAware]
               :name       com.vlnabatov.alabaster.extensions.annotation.CljAnnotator
               :prefix     "-"))
 
 
-(def macro (Keyword/find "macro"))
-(def ns (Keyword/find "ns"))
+(def macro-kw (Keyword/find "macro"))
+(def ns-kw (Keyword/find "ns"))
 
 (def functions-macros-regex #"\bfn|defn|defn-|defmulti|defmethod|defmacro|deftest\b")
 
 
-(defn is-clojure-lang-ns-call [^ClojurePsiElement e] ())
+(defn is-clojure-lang-ns-call [^ClojurePsiElement e] nil)
 
 
 
