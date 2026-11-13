@@ -3,5 +3,8 @@
         <annotator
                 language="XML"
                 implementationClass="com.vlnabatov.alabaster.extensions.annotation.XMLAnnotator"/>
+        <annotator
+                language="HTML"
+                implementationClass="com.vlnabatov.alabaster.extensions.annotation.XMLAnnotator"/>
     </extensions>
 </idea-plugin>

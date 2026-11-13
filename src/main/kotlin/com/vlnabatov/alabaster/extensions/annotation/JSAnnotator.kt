@@ -4,7 +4,6 @@ import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity.INFORMATION
 import com.intellij.lang.javascript.JSElementTypes.ASSIGNMENT_EXPRESSION
-import com.intellij.lang.javascript.JSElementTypes.CLASS
 import com.intellij.lang.javascript.JSElementTypes.CLASS_EXPRESSIONS
 import com.intellij.lang.javascript.JSElementTypes.DEFINITION_EXPRESSION
 import com.intellij.lang.javascript.JSElementTypes.DESTRUCTURING_ELEMENT
@@ -69,8 +68,6 @@ val functionExpressionTypes =
     *CLASS_EXPRESSIONS.types,
   )
 
-val classTypes = setOf(CLASS, *CLASS_EXPRESSIONS.types)
-
 
 val functionConstructorRegex =
   Regex("\\bFunction|AsyncFunction|GeneratorFunction|AsyncGeneratorFunction\\b")
@@ -84,8 +81,9 @@ class JSAnnotator : Annotator {
         isSymbolIdentifier(element) ->
           holder.newSilentAnnotation(INFORMATION).textAttributes(NUMBER).create()
 
-        element.elementType in identifierTypes &&
-            (isFunctionDefinition(element) || element.parent.elementType in classTypes) ->
+        // Only function definitions keep a dedicated colour; class names stay in the
+        // default text colour.
+        element.elementType in identifierTypes && isFunctionDefinition(element) ->
           holder.newSilentAnnotation(INFORMATION).textAttributes(FUNCTION_DECLARATION).create()
 
         element.elementType in stringTypes ||

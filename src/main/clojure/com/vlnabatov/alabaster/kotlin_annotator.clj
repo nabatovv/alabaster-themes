@@ -4,7 +4,11 @@
            (com.intellij.openapi.editor DefaultLanguageHighlighterColors)
            (com.intellij.psi PsiElement)
            (com.intellij.psi.tree IElementType)
+           (org.jetbrains.kotlin.lexer KtTokens)
            (org.jetbrains.kotlin.psi.stubs.elements KtStubElementTypes)
+           (com.intellij.openapi.editor.colors EditorColorsManager)
+           (com.intellij.openapi.editor.markup TextAttributes)
+           (java.awt Font)
            (com.vlnabatov.alabaster UtilKt))
   (:gen-class :implements [com.intellij.lang.annotation.Annotator
                            com.intellij.openapi.project.PossiblyDumbAware]
@@ -13,10 +17,28 @@
 
 
 
+(defn- annotate-default-text
+  [^AnnotationHolder holder]
+  (let [foreground (.getDefaultForeground (.getSchemeForCurrentUITheme (EditorColorsManager/getInstance)))]
+    (-> holder
+        (.newSilentAnnotation HighlightSeverity/INFORMATION)
+        (.enforcedTextAttributes (TextAttributes. foreground nil nil nil Font/PLAIN))
+        (.create))))
+
+
+(defn- quotation-mark-count
+  [^PsiElement element]
+  (let [child (.getFirstChild element)]
+    (if (nil? child) 1 (max 1 (.getTextLength ^PsiElement child)))))
+
+
 (defn -annotate
   [_ ^PsiElement element ^AnnotationHolder holder]
   (let [^IElementType elementType (.. element getNode getElementType)]
-    (cond (= KtStubElementTypes/STRING_TEMPLATE elementType) (do (UtilKt/annotateSeparationMarks element holder))
+    (cond (or (= KtTokens/OPEN_QUOTE elementType) (= KtTokens/CLOSING_QUOTE elementType))
+            (do (annotate-default-text holder))
+
+          (= KtStubElementTypes/STRING_TEMPLATE elementType) (do (UtilKt/annotateSeparationMarks element holder DefaultLanguageHighlighterColors/BRACES (int (quotation-mark-count element))))
           (contains? #{KtStubElementTypes/NULL KtStubElementTypes/BOOLEAN_CONSTANT KtStubElementTypes/FLOAT_CONSTANT
                        KtStubElementTypes/CHARACTER_CONSTANT KtStubElementTypes/INTEGER_CONSTANT}
                      elementType)

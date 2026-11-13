@@ -4,6 +4,22 @@
 
 ## [Unreleased]
 
+## [1.0.105]
+
+- Keywords use the default text colour in all languages; type references take over the previous greyish keyword colour
+- Class names use the default text colour, including JavaScript and TypeScript class declarations
+- XML and HTML tag names, including `<`, `</`, `>` and `/>`, use the default text colour
+- Kotlin string quotes are highlighted in the default text colour
+- String bodies always keep the string colour (fixes strings passed as call arguments, e.g. in PHP)
+- `true`, `false`, `null`/`nil` use the number colour in Java, Kotlin, Scala, Go, JavaScript and PHP
+
+## [1.0.104]
+
+- Java, Kotlin, Go and XML annotators are back to their 1.0.91 behaviour (Kotlin implementations)
+- PHP: variables, function/method calls (including standard library calls) and keywords now use the default text colour
+- PHP: magic constants use the same colour as regular constants
+- PHP: function/method definitions keep the function colour
+
 ## [1.0.103]
 
 - PHP and the shared (all other languages) annotator highlight function/method definitions again; call sites keep the default text colour
@@ -187,7 +203,9 @@
 
 - Python improved
 
-[Unreleased]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.103...HEAD
+[Unreleased]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.105...HEAD
+[1.0.105]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.104...v1.0.105
+[1.0.104]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.103...v1.0.104
 [1.0.103]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.102...v1.0.103
 [1.0.102]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.101...v1.0.102
 [1.0.101]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.100...v1.0.101

@@ -106,9 +106,7 @@
             </value>
         </option>
         <option name="C_KEYWORD">
-            <value>
-                <option name="FOREGROUND" value="7a3e9d" />
-            </value>
+            <value />
         </option>
         <option name="C_LET_BINDING">
             <value />
@@ -238,6 +236,11 @@
         <option name="DEFAULT_CLASS_NAME">
             <value />
         </option>
+        <option name="DEFAULT_CLASS_REFERENCE">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
         <option name="DEFAULT_COMMA">
             <value>
                 <option name="FOREGROUND" value="6e6e6e" />
@@ -301,9 +304,7 @@
             </value>
         </option>
         <option name="DEFAULT_KEYWORD">
-            <value>
-                <option name="FOREGROUND" value="0" />
-            </value>
+          <value />
         </option>
         <option name="DEFAULT_LABEL">
             <value>
@@ -995,6 +996,12 @@
                 <option name="BACKGROUND" value="ffe8c6" />
                 <option name="EFFECT_TYPE" value="2" />
             </value>
+        </option>
+        <option name="HTML_TAG_NAME">
+            <value />
+        </option>
+        <option name="XML_TAG_NAME">
+            <value />
         </option>
     </attributes>
 </scheme>

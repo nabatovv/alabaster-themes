@@ -43,6 +43,17 @@ fun annotateSeparationMarks(element: PsiElement, holder: AnnotationHolder, textA
         .textAttributes(textAttributesKey)
         .create()
 
+    // Keep the string body in the string colour: some languages (e.g. PHP call arguments)
+    // otherwise render it with the default text colour.
+    val contentStart = element.textRange.startOffset + numberOfOpeningQuotationMarks
+    val contentEnd = element.textRange.endOffset - numberOfClosingQuotationMarks
+    if (contentEnd > contentStart) {
+        holder
+            .newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .range(TextRange(contentStart, contentEnd))
+            .textAttributes(STRING)
+            .create()
+    }
 
     if (isAlabasterTheme()) {
         val foreground = EditorColorsManager.getInstance().schemeForCurrentUITheme.defaultForeground

@@ -71,8 +71,13 @@
         <option name="FOREGROUND" value="6e6e6e" />
       </value>
     </option>
-    <option name="DEFAULT_CLASS_REFERENCE">
+    <option name="DEFAULT_CLASS_NAME">
       <value />
+    </option>
+    <option name="DEFAULT_CLASS_REFERENCE">
+      <value>
+        <option name="FOREGROUND" value="0" />
+      </value>
     </option>
     <option name="DEFAULT_COMMA">
       <value>
@@ -135,9 +140,7 @@
       </value>
     </option>
     <option name="DEFAULT_KEYWORD">
-      <value>
-        <option name="FOREGROUND" value="0" />
-      </value>
+      <value />
     </option>
     <option name="DEFAULT_LABEL">
       <value />
