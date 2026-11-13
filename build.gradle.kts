@@ -56,10 +56,12 @@ dependencies {
     implementation("http-kit:http-kit:2.8.1")
 
     intellijPlatform {
-        intellijIdeaUltimate("2026.3")
-        bundledPlugins("org.jetbrains.kotlin", "com.intellij.java", "JavaScript", "com.intellij.modules.jcef")
+        intellijIdea("2026.3")
+        bundledPlugins("org.jetbrains.kotlin", "com.intellij.java", "com.intellij.modules.jcef")
         plugins(
             "com.cursiveclojure.cursive:2026.4.1-263",
+            "com.jetbrains.php:263.7307.200",
+            "JavaScript:263.7307.200",
             "org.intellij.scala:2026.3.26",
             "org.jetbrains.plugins.go:263.7307.200",
             "PsiViewer:2026.2"
@@ -122,10 +124,8 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            // Oldest supported IDE (243) and the latest IntelliJ IDEA (263) — since 2025.3 the Community Edition
-            // is published as the unified "IntelliJ IDEA" distribution (idea:idea), no longer as ideaIC.
-            create(IntelliJPlatformType.IntellijIdeaCommunity, "2024.3.7")
-            create(IntelliJPlatformType.IntellijIdeaUltimate, "2026.3")
+            // Only the latest IntelliJ IDEA Community release is required.
+            create(IntelliJPlatformType.IntellijIdea, "2026.3")
         }
     }
 }

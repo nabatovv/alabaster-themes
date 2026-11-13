@@ -3,7 +3,7 @@
     <id>com.vlnabatov.alabaster</id>
     <name>Alabaster Themes</name>
     <category>Themes</category>
-    <vendor url="https://github.com/nabato"
+    <vendor url="https://github.com/nabatovv"
             email="nabatov.vladislav@gmail.com">
         Vladislav Nabatov
     </vendor>
@@ -28,6 +28,10 @@
     </depends>
     <depends
             optional="true"
+            config-file="withPHP.xml">com.jetbrains.php
+    </depends>
+    <depends
+            optional="true"
             config-file="withKotlin.xml">org.jetbrains.kotlin
     </depends>
     <depends
@@ -49,6 +53,11 @@
         <themeProvider id="com.vlnabatov.alabaster" path="/META-INF/alabaster.theme.json"/>
         <themeProvider id="com.vlnabatov.alabaster-bg" path="/META-INF/alabaster-bg.theme.json"/>
         <themeProvider id="com.vlnabatov.alabaster-dark" path="/META-INF/alabaster-dark.theme.json"/>
+
+        <!-- The shared annotator applies to every language, including languages added by
+             plugins installed later; CommonAnnotator skips the languages that have a
+             dedicated annotator (see dedicated-languages in common_annotator.clj). -->
+        <annotator implementationClass="com.vlnabatov.alabaster.extensions.annotation.CommonAnnotator"/>
     </extensions>
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
         <supportsKotlinPluginMode supportsK2="true" />

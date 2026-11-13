@@ -1,68 +1,172 @@
 # frozen_string_literal: true
 
-str = 'hello' # strings are highlighted
+# Full Ruby syntax sample.
+# Covers modules, classes, methods, blocks, procs, lambdas, symbols, hashes,
+# exceptions, metaprogramming, string interpolation and pattern matching.
 
-puts str
+MAX_ITEMS = 1024
+GREETING = 'hello'
+ENABLED = true
+RATIO = 1.5e3
 
-num = 5 # numbers are highlighted
-constt = true # no way to highlight only boolean constants
-
-# All callable variables should be highlighted during declaration, but not during invocation.
-
-def hello(some_stuff) # highlighted
-  def hello05 # highlighted
-  end
-
-  hello05() # should not be highlighted
-
-  return some_stuff + ' from a function.'
-end
-
-hello('hello') # should not be highlighted
-
-hello2 = lambda do # no way to highlight lambda declarations
-end
-
-hello2.call('') # should not be highlighted
-
-hello3 = -> {
-} # no way to highlight short lambda declarations
-
-hello3.call # should not be highlighted
-
-def generator(i) # highlighted
-  Enumerator.new do |yielder|
-    yielder << i
-    yielder << (i + 10)
+module Describable
+  def describe
+    "#{self.class.name.downcase}: #{to_s}"
   end
 end
 
-generator(nil) # should not be highlighted
+module Comparable
+  def largest
+    max
+  end
+end
 
-obj = {
-  field_func: -> {
-  } # no way to highlight lambda declarations
-}
+class Shape
+  include Describable
 
-class Rectangle # highlighted
-  def initialize(height, width) # highlighted
-    @height = height
+  attr_reader :name
+  attr_accessor :color
+
+  def initialize(name, color: :black)
+    @name = name
+    @color = color
+  end
+
+  def area
+    raise NotImplementedError, "#{self.class} must implement #area"
+  end
+
+  def to_s
+    "#{name} #{area.round(2)}"
+  end
+end
+
+class Circle < Shape
+  def initialize(radius)
+    super('circle')
+    @radius = radius
+  end
+
+  def area
+    Math::PI * @radius**2
+  end
+end
+
+class Rectangle < Shape
+  def initialize(width, height)
+    super('rectangle', color: :blue)
     @width = width
-  end
-
-  def some_method # highlighted
-  end
-end
-
-rect = Rectangle.new(1, 2) # should not be highlighted
-
-rect.some_method # should not be highlighted
-
-Rectangle2 = Class.new do # highlighted
-  def initialize(height, width) # highlighted
     @height = height
-    @width = width
+  end
+
+  def area
+    @width * @height
   end
 end
 
-rect2 = Rectangle2.new(1, 2) # should not be highlighted
+class Stack
+  include Enumerable
+
+  def initialize(*items)
+    @items = items
+  end
+
+  def push(item)
+    @items.push(item)
+    self
+  end
+
+  def pop
+    @items.pop
+  end
+
+  def each(&block)
+    @items.each(&block)
+  end
+
+  def [](index)
+    @items[index]
+  end
+end
+
+def greet(name = 'world', punctuation: '!')
+  "#{GREETING}, #{name}#{punctuation}"
+end
+
+def classify(value)
+  case value
+  when 0 then 'zero'
+  when Integer then value.negative? ? 'negative' : 'positive'
+  when String then "text #{value}"
+  when Hash then value[:kind] || 'hash'
+  else 'unknown'
+  end
+end
+
+def pattern_matching(value)
+  case value
+  in { name: String => name, age: Integer => age } if age >= 18
+    "#{name} is an adult"
+  in [Integer => first, *rest]
+    "#{first} then #{rest.inspect}"
+  else
+    'no match'
+  end
+end
+
+def blocks_and_lambdas(numbers)
+  doubled = numbers.map { |number| number * 2 }
+  evens = numbers.select(&:even?)
+  total = numbers.reduce(0) { |sum, number| sum + number }
+  add = ->(a, b) { a + b }
+  square = proc { |value| value**2 }
+  [doubled, evens, total, add.call(1, 2), square.call(3)]
+end
+
+def exceptions
+  raise ArgumentError, 'boom'
+rescue ArgumentError => e
+  e.message
+ensure
+  nil
+end
+
+def metaprogramming
+  klass = Class.new do
+    define_method(:dynamic) { |value| value * 2 }
+  end
+
+  klass.new.dynamic(21)
+end
+
+def strings
+  text = "  Ruby strings  "
+  {
+    trimmed: text.strip,
+    upper: text.upcase,
+    length: text.length,
+    formatted: format('%s has %d items', GREETING, 3),
+    interpolation: "#{GREETING} #{MAX_ITEMS} #{RATIO} #{ENABLED}"
+  }
+end
+
+def run
+  shapes = [Circle.new(2), Rectangle.new(3, 4)]
+  total = shapes.sum(&:area)
+  stack = Stack.new(1, 2).push(3)
+
+  puts greet('ruby')
+  puts classify(-5)
+  puts pattern_matching(name: 'alice', age: 30)
+  p blocks_and_lambdas([1, 2, 3, 4])
+  puts exceptions
+  puts metaprogramming
+  p strings
+  puts total.round(2)
+  puts stack.map { |value| value * 10 }.inspect
+  puts stack[0]
+  puts shapes.first.describe
+  puts ENABLED, RATIO, MAX_ITEMS
+end
+
+run if $PROGRAM_NAME == __FILE__
