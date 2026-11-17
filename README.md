@@ -27,31 +27,6 @@ Tired of motley editor themes that have more colors than a chameleon? This theme
 
 <img src="images/collage-cropped.png" style="max-width: 2000px; width: 100%" alt="collage"/>
 
-## Releasing
-
-Releases are published to the JetBrains Marketplace from GitHub Actions.
-
-1. Bump `pluginVersion` in `gradle.properties` and add the matching section to `CHANGELOG.md`.
-2. Merge to `main` – the **Build** workflow builds and verifies the plugin.
-3. Publish a GitHub release (e.g. tag `v1.0.96`) – the **Release** workflow builds the plugin, runs the Plugin Verifier and uploads it to the Marketplace.
-   The workflow can also be started manually from the Actions tab.
-
-Required repository secret (Settings → Secrets and variables → Actions):
-
-| Secret           | Description                                                                 |
-|------------------|-----------------------------------------------------------------------------|
-| `PUBLISH_TOKEN`  | Permanent JetBrains Marketplace token (`JETBRAINS_MARKETPLACE_TOKEN` also accepted) |
-
-Optional secrets used by `signPlugin`; when they are absent, the Marketplace signs the upload itself:
-
-| Secret                  | Description                                  |
-|-------------------------|----------------------------------------------|
-| `CERTIFICATE_CHAIN`     | PEM-encoded certificate chain                |
-| `PRIVATE_KEY`           | PEM-encoded private key                      |
-| `PRIVATE_KEY_PASSWORD`  | Password of the private key                  |
-
-The version taken from `gradle.properties` cannot be uploaded twice – if it is already on the Marketplace the workflow skips publishing and reports it, so bump `pluginVersion` to release again.
-
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
