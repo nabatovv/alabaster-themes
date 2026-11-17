@@ -58,6 +58,14 @@
              plugins installed later; CommonAnnotator skips the languages that have a
              dedicated annotator (see dedicated-languages in common_annotator.clj). -->
         <annotator implementationClass="com.vlnabatov.alabaster.extensions.annotation.CommonAnnotator"/>
+
+        <!-- Settings page for customising the editor colours of the three schemes. -->
+        <applicationConfigurable
+                id="com.vlnabatov.alabaster.settings"
+                displayName="Alabaster Themes"
+                implementation="com.vlnabatov.alabaster.settings.AlabasterSettingsConfigurable"/>
+        <postStartupActivity
+                implementation="com.vlnabatov.alabaster.settings.AlabasterSettingsStartupActivity"/>
     </extensions>
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
         <supportsKotlinPluginMode supportsK2="true" />

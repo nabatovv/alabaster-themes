@@ -2,7 +2,8 @@
 
 # Full Ruby syntax sample.
 # Covers modules, classes, methods, blocks, procs, lambdas, symbols, hashes,
-# exceptions, metaprogramming, string interpolation and pattern matching.
+# exceptions, metaprogramming, string interpolation, pattern matching, data
+# classes and endless methods.
 
 MAX_ITEMS = 1024
 GREETING = 'hello'
@@ -166,7 +167,12 @@ def run
   puts stack.map { |value| value * 10 }.inspect
   puts stack[0]
   puts shapes.first.describe
+  puts Coordinate.new(3, 4).distance
   puts ENABLED, RATIO, MAX_ITEMS
+end
+
+Coordinate = Data.define(:x, :y) do
+  def distance = Math.sqrt(x**2 + y**2)
 end
 
 run if $PROGRAM_NAME == __FILE__

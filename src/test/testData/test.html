@@ -1,25 +1,218 @@
-<script type="application/javascript">
-    import { onMount } from "svelte"
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Complete HTML5 syntax showcase for theme highlighting tests.">
+    <title>Alabaster &middot; HTML5 Syntax Showcase</title>
+    <base href="/showcase/">
+    <link rel="stylesheet" href="/assets/theme.css" media="screen">
+    <link rel="preload" href="/assets/fonts/alabaster.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" sizes="any">
+    <style>
+        :root { --accent: #3b82f6; --gap: 1.5rem; }
+        .grid { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+        .lead::first-letter { float: left; font-size: 3rem; line-height: 1; }
+        .row > .label { font-weight: 600; }
+    </style>
+    <script type="module">
+        const state = { count: 0 }
 
-    export let foo
+        export function increment(step = 1) {
+            state.count += step
+            document.querySelector("[data-counter]").textContent = String(state.count)
+        }
 
-    const bar = 42
-    let state = ""
-    
-
-    onMount(() => { state = "mounted" })
-
-    const handleClick = () => {
-        state = "clicked"
-    }
-
-    handleClick();
-
-    const hello = () => {}
-</script>
-<style>
-    body {
-        font-size: 24px;
-        display: flex;
-    }
-</style>
+        document.addEventListener("DOMContentLoaded", () => increment(0))
+    </script>
+</head>
+<body class="page" data-theme="dark" data-density="comfortable">
+    <!-- Skip link, then the banner landmark -->
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header id="top" role="banner" aria-label="Site header">
+        <h1>Alabaster <em>HTML5</em> showcase</h1>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="#text" aria-current="page">Text</a></li>
+                <li><a href="#tables">Tables</a></li>
+                <li><a href="#forms">Forms</a></li>
+                <li><a href="#media">Media</a></li>
+                <li><a href="#widgets">Widgets</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main id="content">
+        <section id="text" aria-labelledby="text-heading">
+            <h2 id="text-heading">Semantic landmarks &amp; prose</h2>
+            <p class="lead">A quick brown fox &mdash; 1&nbsp;&lt;&nbsp;2 &amp;&amp; 3&nbsp;&gt;&nbsp;2 &mdash; jumps
+                over the lazy dog&hellip; &copy; &reg; &trade; &laquo;quoted&raquo; &#169; &#x2603;</p>
+            <article>
+                <h3>Headings four to six</h3>
+                <h4>Level four</h4>
+                <h5>Level five</h5>
+                <h6>Level six</h6>
+                <p>
+                    Inline: <strong>strong</strong>, <em>emphasis</em>, <b>bold</b>, <i>idiomatic</i>, <u>underline</u>, <s>struck</s>,
+                    <mark>highlighted</mark>, <small>small print</small>, H<sub>2</sub>O, mc<sup>2</sup>, <q cite="https://example.com">quoted</q>,
+                    <abbr title="HyperText Markup Language">HTML</abbr>, <dfn>definition</dfn>, <cite>Source</cite>, <code>x &lt; 1</code>,
+                    <kbd>Ctrl</kbd>+<kbd>C</kbd>, <samp>stdout</samp>, <var>e</var>, <time datetime="2024-06-01T09:30:00Z">1 June 2024</time>,
+                    <data value="42">forty-two</data>, <del datetime="2024-01-01">old</del> <ins datetime="2024-02-02">new</ins>.
+                </p>
+                <p>Bidi: <bdi>إيان</bdi> then <bdo dir="rtl">reversed</bdo>, ruby <ruby>漢<rp>(</rp><rt>kan</rt><rp>)</rp></ruby>.</p>
+                <pre><code class="language-js">function greet(name) {
+    return `Hello, ${name}!`
+}</code></pre>
+                <ul>
+                    <li><a href="mailto:hello@example.com?subject=Showcase">Email</a></li>
+                    <li><a href="tel:+15550100">Telephone</a></li>
+                    <li><a href="/downloads/report.pdf" download="report.pdf" type="application/pdf">Download</a></li>
+                    <li><a href="https://example.com" target="_blank" rel="noopener noreferrer">External</a></li>
+                </ul>
+            </article>
+            <figure>
+                <picture>
+                    <source srcset="/images/hills.avif" type="image/avif" media="(min-width: 50em)">
+                    <source srcset="/images/hills.webp" type="image/webp">
+                    <img src="/images/hills.jpg" alt="Rolling hills at sunrise" width="640" height="360"
+                         srcset="/images/hills.jpg 1x, /images/hills@2x.jpg 2x" sizes="(min-width: 50em) 50vw, 100vw"
+                         loading="lazy" decoding="async">
+                </picture>
+                <figcaption>Responsive image inside <code>&lt;picture&gt;</code>.</figcaption>
+            </figure>
+            <aside aria-label="Related reading">
+                <h3>Aside</h3>
+                <p>Tangential note with an <a href="#content">internal link</a>.</p>
+            </aside>
+        </section>
+        <section id="lists" aria-labelledby="lists-heading">
+            <h2 id="lists-heading">Lists</h2>
+            <ul>
+                <li>Unordered item</li>
+                <li>Item with a nested list:
+                    <ul><li>Inner item</li></ul></li>
+            </ul>
+            <ol type="A" start="3" reversed>
+                <li value="10">Ordered item</li>
+                <li>Another ordered item</li>
+            </ol>
+            <dl>
+                <dt>Term</dt><dd>Definition of the term.</dd>
+                <dt>Another term</dt><dd>Its definition.</dd>
+            </dl>
+        </section>
+        <section id="tables" aria-labelledby="tables-heading">
+            <h2 id="tables-heading">Tables</h2>
+            <table>
+                <caption>Quarterly results</caption>
+                <colgroup><col span="1" class="quarter"><col span="2" class="numbers"></colgroup>
+                <thead><tr><th scope="col">Quarter</th><th scope="col">Revenue</th><th scope="col">Profit</th></tr></thead>
+                <tbody>
+                    <tr><th scope="row">Q1</th><td>1,200</td><td rowspan="2">300</td></tr>
+                    <tr><th scope="row">Q2</th><td colspan="1">1,500</td></tr>
+                </tbody>
+                <tfoot><tr><th scope="row">Total</th><td>2,700</td><td>300</td></tr></tfoot>
+            </table>
+        </section>
+        <section id="forms" aria-labelledby="forms-heading">
+            <h2 id="forms-heading">Forms</h2>
+            <form action="/subscribe" method="post" enctype="multipart/form-data" novalidate>
+                <fieldset>
+                    <legend>Account</legend>
+                    <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                    <label for="password">Password</label><input id="password" name="password" type="password" minlength="8">
+                    <label for="search">Search</label><input id="search" name="search" type="search" list="topics" enterkeyhint="search">
+                    <label for="phone">Phone</label><input id="phone" name="phone" type="tel" pattern="\+?[0-9 ()-]+">
+                    <label for="site">Website</label><input id="site" name="site" type="url" value="https://example.com">
+                    <label for="age">Age</label><input id="age" name="age" type="number" min="0" max="120" step="1">
+                    <label for="volume">Volume</label><input id="volume" name="volume" type="range" min="0" max="100" value="50" step="5">
+                    <label for="d1">Date</label><input id="d1" name="d1" type="date" min="2024-01-01">
+                    <label for="t1">Time</label><input id="t1" name="t1" type="time" step="60">
+                    <label for="dt1">Local date-time</label><input id="dt1" name="dt1" type="datetime-local">
+                    <label for="m1">Month</label><input id="m1" name="m1" type="month">
+                    <label for="w1">Week</label><input id="w1" name="w1" type="week">
+                    <label for="color">Colour</label><input id="color" name="color" type="color" value="#3b82f6">
+                    <label for="file">Attachment</label><input id="file" name="file" type="file" accept="image/*,.pdf" multiple>
+                    <label><input name="newsletter" type="checkbox" checked> Subscribe to the newsletter</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Preferences</legend>
+                    <label><input name="plan" type="radio" value="free" checked> Free</label>
+                    <label><input name="plan" type="radio" value="pro"> Pro</label>
+                    <label for="topic">Topic</label>
+                    <select id="topic" name="topic" multiple size="3">
+                        <optgroup label="Front end"><option value="html" selected>HTML</option><option value="css">CSS</option></optgroup>
+                        <optgroup label="Back end"><option value="clojure">Clojure</option></optgroup>
+                    </select>
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="4" cols="40" maxlength="500" placeholder="Anything else?">Pre-filled text.</textarea>
+                    <datalist id="topics"><option value="runes"></option><option value="snippets"></option></datalist>
+                </fieldset>
+                <input type="hidden" name="token" value="abc123">
+                <button type="submit">Subscribe</button>
+                <button type="reset">Reset</button>
+                <input type="submit" value="Send">
+                <input type="reset" value="Clear">
+            </form>
+            <p>Result: <output name="total" for="volume">50</output></p>
+            <p><progress max="100" value="70">70%</progress></p>
+            <p><meter min="0" max="10" low="3" high="7" optimum="8" value="6">6 of 10</meter></p>
+        </section>
+        <section id="media" aria-labelledby="media-heading">
+            <h2 id="media-heading">Media</h2>
+            <video controls width="480" poster="/media/poster.jpg" playsinline muted loop preload="metadata">
+                <source src="/media/clip.webm" type="video/webm">
+                <source src="/media/clip.mp4" type="video/mp4">
+                <track kind="captions" src="/media/captions-en.vtt" srclang="en" label="English" default>
+                <track kind="descriptions" src="/media/descriptions-en.vtt" srclang="en" label="Descriptions">
+                Your browser does not support the video element.
+            </video>
+            <audio controls preload="none">
+                <source src="/media/theme.ogg" type="audio/ogg">
+                <source src="/media/theme.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <iframe src="/sandbox/embedded" title="Embedded document" width="480" height="240" loading="lazy" sandbox="allow-scripts" allowfullscreen></iframe>
+            <iframe srcdoc="&lt;h2&gt;Inline frame&lt;/h2&gt;&lt;p&gt;Rendered from srcdoc.&lt;/p&gt;" title="Inline frame" width="320" height="120"></iframe>
+            <canvas id="spark" width="320" height="160" role="img" aria-label="Sparkline placeholder">Canvas unsupported.</canvas>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" role="img" aria-labelledby="svg-title">
+                <title id="svg-title">Decorative shapes</title>
+                <defs>
+                    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#3b82f6"></stop><stop offset="100%" stop-color="#8b5cf6"></stop>
+                    </linearGradient>
+                    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fbbf24"></stop><stop offset="100%" stop-color="#fbbf2400"></stop>
+                    </radialGradient>
+                </defs>
+                <rect x="0" y="0" width="200" height="100" rx="8" fill="url(#fade)"></rect>
+                <circle cx="50" cy="50" r="24" fill="url(#glow)" stroke="#ffffff" stroke-width="2"></circle>
+                <path d="M100 20 L120 80 L140 40 Z" fill="none" stroke="#ffffff" stroke-linecap="round"></path>
+                <polyline points="150,80 165,40 175,70 190,30" fill="none" stroke="#ffffff"></polyline>
+                <text x="10" y="95" font-size="10" fill="#ffffff">Alabaster</text>
+            </svg>
+        </section>
+        <section id="widgets" aria-labelledby="widgets-heading">
+            <h2 id="widgets-heading">Interactive widgets</h2>
+            <details open>
+                <summary>Disclosure <small>(click to toggle)</small></summary>
+                <p>Hidden until expanded.<br>Line two after an explicit break.</p>
+            </details>
+            <button type="button" popovertarget="help">Open help</button>
+            <dialog id="help" popover aria-labelledby="help-title">
+                <h2 id="help-title">Help dialog</h2>
+                <p>Press <kbd>Esc</kbd> to dismiss.</p>
+                <form method="dialog"><button>Close</button></form>
+            </dialog>
+            <template id="row-template"><tr><td class="quarter"></td><td class="numbers"></td></tr></template>
+            <address>Alabaster Themes<br><a href="mailto:maintainers@example.com">maintainers@example.com</a></address>
+            <hr>
+            <!-- Live counter updated by the module above -->
+            <p data-counter data-analytics-event="increment" role="status" aria-live="polite" aria-atomic="true">0</p>
+        </section>
+    </main>
+    <footer role="contentinfo" aria-label="Site footer">
+        <p>&copy; 2024 Alabaster &middot; <a href="#top">Back to top</a></p>
+    </footer>
+    <noscript><p>JavaScript is disabled; this showcase is static.</p></noscript>
+</body>
+</html>

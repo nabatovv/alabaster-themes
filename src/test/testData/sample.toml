@@ -1,0 +1,71 @@
+# Full TOML 1.0 syntax sample.
+title = "TOML Example"
+
+[owner]
+name = "Tom Preston-Werner"
+dob = 1979-05-27T07:32:00-08:00
+
+[database]
+enabled = true
+ports = [8000, 8001, 8002]
+data = [["delta", "phi"], [3.14]]
+temp_targets = { cpu = 79.5, case = 72.0 }
+
+[servers.alpha]
+ip = "10.0.0.1"
+role = "frontend"
+
+[servers.beta]
+ip = "10.0.0.2"
+role = "backend"
+
+[[products]]
+name = "Hammer"
+sku = 738594937
+
+[[products]]
+name = "Nail"
+sku = 284758393
+color = "gray"
+
+[strings]
+basic = "I'm a string. \"You can quote me\"."
+literal = 'C:\Users\nodejs\templates'
+multiline = """
+Roses are red
+Violets are blue"""
+multilineLiteral = '''
+The first newline is trimmed.
+All other whitespace is preserved.'''
+unicode = "unicode: \u03B4"
+
+[numbers]
+int1 = +99
+int2 = 42
+int3 = 0
+int4 = -17
+hex = 0xDEADBEEF
+oct = 0o755
+bin = 0b11010110
+flt1 = +1.0
+flt2 = 3.1415
+flt3 = -0.01
+flt4 = 5e+22
+flt5 = 1e06
+flt6 = -2E-2
+flt7 = 6.626e-34
+infinity = inf
+notANumber = nan
+
+[dates]
+odt1 = 1979-05-27T07:32:00Z
+odt2 = 1979-05-27T00:32:00-07:00
+odt3 = 1979-05-27T00:32:00.999999-07:00
+localDate = 1979-05-27
+localTime = 07:32:00
+localTimePrecise = 00:32:00.999999
+
+[dotted]
+a.b.c = 1
+a.b.d = 2
+"quoted.key" = "quoted segment"

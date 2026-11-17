@@ -1,33 +1,49 @@
-
-<breakfast_menu>
-    <food>
-        <name>Belgian Waffles</name>
-        <price>$5.95</price>
-        <description>Two of our famous Belgian Waffles with plenty of real maple syrup</description>
-        <calories>650</calories>
-    </food>
-    <food>
-        <name>Strawberry Belgian Waffles</name>
-        <price>$7.95</price>
-        <description>Light Belgian waffles covered with strawberries and whipped cream</description>
-        <calories>900</calories>
-    </food>
-    <food>
-        <name>Berry-Berry Belgian Waffles</name>
-        <price>$8.95</price>
-        <description>Light Belgian waffles covered with an assortment of fresh berries and whipped cream</description>
-        <calories>900</calories>
-    </food>
-    <food>
-        <name>French Toast</name>
-        <price>$4.50</price>
-        <description>Thick slices made from our homemade sourdough bread</description>
-        <calories>600</calories>
-    </food>
-    <food>
-        <name>Homestyle Breakfast</name>
-        <price>$6.95</price>
-        <description>Two eggs, bacon or sausage, toast, and our ever-popular hash browns</description>
-        <calories>950</calories>
-    </food>
-</breakfast_menu>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="showcase.xsl"?>
+<!-- Full XML syntax sample: declaration, processing instruction, DTD, namespaces,
+     attributes, entities, CDATA, comments and mixed content. -->
+<!DOCTYPE catalog [
+  <!ELEMENT catalog (book+, note*)>
+  <!ELEMENT book (title, author+, price, description?, tags?)>
+  <!ATTLIST book
+      id ID #REQUIRED
+      category CDATA #IMPLIED
+      available (yes | no) "yes">
+  <!ELEMENT title (#PCDATA)>
+  <!ATTLIST title lang CDATA "en">
+  <!ELEMENT author (#PCDATA)>
+  <!ATTLIST author role CDATA #IMPLIED>
+  <!ELEMENT price (#PCDATA)>
+  <!ATTLIST price currency CDATA "USD">
+  <!ELEMENT description (#PCDATA)>
+  <!ELEMENT tags (tag+)>
+  <!ELEMENT tag (#PCDATA)>
+  <!ELEMENT note (#PCDATA)>
+]>
+<catalog xmlns="urn:example:catalog"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xsi:schemaLocation="urn:example:catalog catalog.xsd">
+  <book id="b1" category="fiction" available="yes">
+    <title lang="en">The &amp; Escape</title>
+    <dc:creator>A. Author</dc:creator>
+    <author role="main">A. Author</author>
+    <author>B. Author</author>
+    <price currency="USD">19.99</price>
+    <description><![CDATA[Raw <markup> & "quotes" are allowed here.]]></description>
+    <tags>
+      <tag>classic</tag>
+      <tag>adventure</tag>
+    </tags>
+  </book>
+  <book id="b2" category="reference">
+    <title lang="fr">Caractères &amp; symboles</title>
+    <author>Camille Écrivain</author>
+    <price currency="EUR">24,50</price>
+    <description>Entities: &lt; &gt; &amp; &quot; &apos; and numeric &#169; &#x1F600;.</description>
+    <tags>
+      <tag>reference</tag>
+    </tags>
+  </book>
+  <note>CDATA above, comments like this one, and an xml-stylesheet instruction above.</note>
+</catalog>

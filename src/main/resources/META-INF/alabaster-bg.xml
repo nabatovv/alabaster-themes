@@ -802,6 +802,66 @@
                 <option name="EFFECT_TYPE" value="2" />
             </value>
         </option>
+        <option name="PHP_CONSTANT">
+            <value>
+                <option name="FOREGROUND" value="7a3e9d" />
+            </value>
+        </option>
+        <option name="PHP_FUNCTION_CALL">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_INSTANCE_METHOD">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_NAMED_ARGUMENT">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_PARAMETER">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_PREDEFINED SYMBOL">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_PRIVATE_INSTANCE_METHOD">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_PROTECTED_INSTANCE_METHOD">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_STATIC_METHOD">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_THIS_VAR">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_VAR">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
+        <option name="PHP_VAR_VAR">
+            <value>
+                <option name="FOREGROUND" value="0" />
+            </value>
+        </option>
         <option name="Rainbow Parens Level 2">
             <value />
         </option>
@@ -926,11 +986,25 @@
         <option name="TS.TYPE_GUARD">
             <value />
         </option>
+        <option name="KOTLIN_TYPE_PARAMETER">
+            <value>
+                <option name="FOREGROUND" value="20999d" />
+            </value>
+        </option>
+        <option name="Scala Type parameter">
+            <value>
+                <option name="FOREGROUND" value="20999d" />
+            </value>
+        </option>
         <option name="TS.TYPE_PARAMETER">
-            <value />
+            <value>
+                <option name="FOREGROUND" value="20999d" />
+            </value>
         </option>
         <option name="TYPE_PARAMETER_NAME_ATTRIBUTES">
-            <value />
+            <value>
+                <option name="FOREGROUND" value="20999d" />
+            </value>
         </option>
         <option name="UNMATCHED_BRACE_ATTRIBUTES">
             <value>
@@ -989,7 +1063,9 @@
             <value />
         </option>
         <option name="org.rust.TYPE_PARAMETER">
-            <value />
+            <value>
+                <option name="FOREGROUND" value="20999d" />
+            </value>
         </option>
         <option name="org.rust.UNSAFE_CODE">
             <value>

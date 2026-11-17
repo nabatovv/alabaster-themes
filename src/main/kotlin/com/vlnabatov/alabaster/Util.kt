@@ -5,7 +5,9 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.editor.colors.EditorColorsManager
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors.BRACES
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors.IDENTIFIER
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors.STRING
+import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -18,11 +20,24 @@ const val theme = "Alabaster"
 const val BGTheme = "$theme BG"
 const val darkTheme = "$theme Dark"
 
-fun isDefaultTheme() = EditorColorsManager.getInstance().schemeForCurrentUITheme.name.endsWith(theme)
-fun isBGTheme() = EditorColorsManager.getInstance().schemeForCurrentUITheme.name.endsWith(BGTheme)
-fun isDarkTheme() = EditorColorsManager.getInstance().schemeForCurrentUITheme.name.endsWith(darkTheme)
+private fun currentScheme() = EditorColorsManager.getInstance().globalScheme
+
+fun isDefaultTheme() = currentScheme().name.endsWith(theme)
+fun isBGTheme() = currentScheme().name.endsWith(BGTheme)
+fun isDarkTheme() = currentScheme().name.endsWith(darkTheme)
 
 fun isAlabasterTheme() = isDefaultTheme() || isBGTheme() || isDarkTheme()
+
+/**
+ * The selected editor scheme resolves fallback keys, so this also yields the
+ * inherited text colour. Asking the scheme for its default foreground alone can
+ * yield null, which made the enforced attributes a no-op and left quotation
+ * marks in the string colour.
+ */
+private fun defaultTextForeground() =
+    currentScheme().getAttributes(HighlighterColors.TEXT)?.foregroundColor
+        ?: currentScheme().getAttributes(IDENTIFIER)?.foregroundColor
+        ?: currentScheme().defaultForeground
 
 @JvmOverloads
 fun annotateSeparationMarks(element: PsiElement, holder: AnnotationHolder, textAttributesKey: TextAttributesKey = BRACES, numberOfQuotationMarks: Int = 1) {
@@ -56,7 +71,7 @@ fun annotateSeparationMarks(element: PsiElement, holder: AnnotationHolder, textA
     }
 
     if (isAlabasterTheme()) {
-        val foreground = EditorColorsManager.getInstance().schemeForCurrentUITheme.defaultForeground
+        val foreground = defaultTextForeground()
         val background = transparentColor
         // Differently colored quotation marks for Alabaster themes
         holder
@@ -76,7 +91,7 @@ fun annotateSeparationMarks(element: PsiElement, holder: AnnotationHolder, textA
             holder
                 .newSilentAnnotation(HighlightSeverity.TEXT_ATTRIBUTES)
                 .range(TextRange(element.textRange.startOffset + numberOfOpeningQuotationMarks, element.textRange.endOffset - numberOfClosingQuotationMarks))
-                .enforcedTextAttributes(TextAttributes(foreground, EditorColorsManager.getInstance().schemeForCurrentUITheme.getAttributes(STRING).backgroundColor, null, null, Font.PLAIN))
+                .enforcedTextAttributes(TextAttributes(foreground, currentScheme().getAttributes(STRING)?.backgroundColor, null, null, Font.PLAIN))
                 .create()
         }
     }

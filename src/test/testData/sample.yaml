@@ -1,0 +1,79 @@
+%YAML 1.2
+%TAG !e! tag:example.com,2026:
+---
+# Full YAML 1.2 syntax sample.
+document:
+  scalars:
+    plain: This is a plain scalar
+    single: 'It''s a single-quoted scalar'
+    double: "Line\nbreak and \u00e9 escapes"
+    null1: null
+    null2: ~
+    booleanTrue: true
+    booleanFalse: false
+    integer: 42
+    negative: -17
+    hexadecimal: 0xDEADBEEF
+    octal: 0o755
+    float: 3.14159
+    exponent: 6.022e23
+    infinity: .inf
+    notANumber: .nan
+    timestamp: 2026-11-18T00:00:00Z
+    date: 2026-11-18
+  collections:
+    sequence:
+      - one
+      - two
+      - [nested, sequence]
+      - {flow: mapping}
+      - - deeply
+        - nested
+    mapping:
+      key: value
+      "quoted key": quoted value
+      ? [complex, key]
+      : complex value
+    flowSequence: [a, b, c]
+    flowMapping: {a: 1, b: 2}
+  blockScalars:
+    literal: |
+      line one
+      line two
+    literalKeep: |+
+      trailing newlines are kept
+
+    literalStrip: |-
+      no trailing newline
+    folded: >
+      folded text
+      joins the lines
+    foldedKeep: >+
+      kept
+
+    foldedStrip: >-
+      stripped
+  anchorsAndAliases:
+    base: &base
+      host: localhost
+      port: 8080
+    alias: *base
+    sequenceAnchor: &items
+      - alpha
+      - beta
+    sequenceAlias: *items
+  tags:
+    custom: !e!thing value
+    explicitString: !!str 123
+    explicitInt: !!int "42"
+    explicitFloat: !!float "3.5"
+...
+---
+# A second document in the same stream.
+sequence:
+  - first
+  - second
+mapping:
+  nested:
+    - third
+...

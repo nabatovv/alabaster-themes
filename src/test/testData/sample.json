@@ -1,0 +1,44 @@
+{
+  "_comment": "Full JSON syntax sample. JSON has no comment syntax, so this member documents the fixture.",
+  "strings": {
+    "plain": "Hello, world",
+    "empty": "",
+    "escapes": "quote: \" backslash: \\ slash: \/ backspace: \b formfeed: \f newline: \n carriage: \r tab: \t",
+    "unicode": "café \u00e9 \u03b4 \uD83D\uDE00",
+    "solidus": "http:\/\/example.com\/path"
+  },
+  "numbers": {
+    "integer": 42,
+    "negative": -17,
+    "zero": 0,
+    "fraction": 3.14159,
+    "negativeFraction": -0.5,
+    "exponent": 6.022e23,
+    "negativeExponent": 1.6e-19,
+    "exponentWithPlus": 1e+10
+  },
+  "booleans": {
+    "yes": true,
+    "no": false
+  },
+  "nothing": null,
+  "arrays": [
+    1,
+    "two",
+    true,
+    null,
+    3.0,
+    ["nested", ["deeper"]],
+    {
+      "objectInArray": true
+    }
+  ],
+  "object": {
+    "nested": {
+      "level": 2,
+      "emptyObject": {},
+      "emptyArray": []
+    },
+    "values": [0, false, "", null]
+  }
+}

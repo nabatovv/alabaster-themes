@@ -1,0 +1,7 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <annotator
+                language="PHP"
+                implementationClass="com.vlnabatov.alabaster.extensions.annotation.PhpAnnotator"/>
+    </extensions>
+</idea-plugin>

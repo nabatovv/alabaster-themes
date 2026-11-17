@@ -1,7 +1,7 @@
 (ns com.vlnabatov.alabaster.kotlin-annotator
   (:import (com.intellij.lang.annotation AnnotationHolder)
            (com.intellij.lang.annotation HighlightSeverity)
-           (com.intellij.openapi.editor DefaultLanguageHighlighterColors)
+           (com.intellij.openapi.editor DefaultLanguageHighlighterColors HighlighterColors)
            (com.intellij.psi PsiElement)
            (com.intellij.psi.tree IElementType)
            (org.jetbrains.kotlin.lexer KtTokens)
@@ -17,13 +17,24 @@
 
 
 
+;; The scheme resolves fallback keys, so this also yields the inherited text
+;; colour. Asking the scheme for its default foreground alone can yield nil,
+;; which made the enforced attributes a no-op and left string quotes in the
+;; string colour.
+(defn- default-foreground
+  []
+  (let [scheme (.getGlobalScheme (EditorColorsManager/getInstance))]
+    (or (some-> (.getAttributes scheme HighlighterColors/TEXT) (.getForegroundColor))
+        (some-> (.getAttributes scheme DefaultLanguageHighlighterColors/IDENTIFIER) (.getForegroundColor))
+        (.getDefaultForeground scheme))))
+
+
 (defn- annotate-default-text
   [^AnnotationHolder holder]
-  (let [foreground (.getDefaultForeground (.getSchemeForCurrentUITheme (EditorColorsManager/getInstance)))]
-    (-> holder
-        (.newSilentAnnotation HighlightSeverity/INFORMATION)
-        (.enforcedTextAttributes (TextAttributes. foreground nil nil nil Font/PLAIN))
-        (.create))))
+  (-> holder
+      (.newSilentAnnotation HighlightSeverity/INFORMATION)
+      (.enforcedTextAttributes (TextAttributes. (default-foreground) nil nil nil Font/PLAIN))
+      (.create)))
 
 
 (defn- quotation-mark-count

@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+## [1.0.106]
+
+- Settings page that lets you change the editor colours of the Alabaster, Alabaster BG and Alabaster Dark colour schemes; the values are persisted and reapplied on startup
+- PHP: constants, magic constants and predefined constants use the violet constant colour; variables, `$this`, enum cases and attribute argument names use the default text colour; all function and method calls, including standard-library calls, use the default text colour
+- Type parameters (`T`, `U`, ...) use the same green in Java, Kotlin, Scala, TypeScript and Rust
+- String quotes consistently use the default text colour, including Kotlin strings and shared string handling
+- Full-syntax samples for Java, Clojure, Scala, Groovy, JSON, YAML, TOML, Markdown and Properties, plus expanded Go, Kotlin, JavaScript, HTML, Svelte, XML and Scala samples covering current language versions
+
 ## [1.0.105]
 
 - Keywords use the default text colour in all languages; type references take over the previous greyish keyword colour
