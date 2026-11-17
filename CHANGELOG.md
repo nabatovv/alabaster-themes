@@ -211,7 +211,8 @@
 
 - Python improved
 
-[Unreleased]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.105...HEAD
+[Unreleased]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.106...HEAD
+[1.0.106]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.105...v1.0.106
 [1.0.105]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.104...v1.0.105
 [1.0.104]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.103...v1.0.104
 [1.0.103]: https://github.com/nabatovv/alabaster-themes/compare/v1.0.102...v1.0.103

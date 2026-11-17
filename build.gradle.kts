@@ -192,6 +192,12 @@ tasks {
     }
 }
 
+// Searchable options are disabled above, so the packaging task has no input
+// directory to consume; disabling it keeps buildPlugin working.
+tasks.matching { it.name == "prepareJarSearchableOptions" }.configureEach {
+    enabled = false
+}
+
 intellijPlatformTesting {
     runIde {
         register("runIdeForUiTests") {
